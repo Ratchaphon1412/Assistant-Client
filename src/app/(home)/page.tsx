@@ -1,32 +1,27 @@
-"use client"
+"use client";
 /* import necessary components */
 import { Button } from "@/components/ui/button"
-
-
+/* Client components */
 /* import section components */
-import { ModelHero3D } from "./_sections/hero"
-import { Logos3, type Logos3Props } from "./_sections/techstack"
-import { Feature197 , type FeatureItem} from "./_sections/features"
-import { Blog7, type Blog7Props } from "./_sections/getstarted"
+import { ModelHero3D } from "../_sections/hero"
+import { Logos3, type Logos3Props } from "../_sections/techstack"
+import { Feature197 , type FeatureItem} from "../_sections/features"
+import { Blog7, type Blog7Props } from "../_sections/getstarted"
+
 
 /* import react and external library */
 import { useEffect, useRef} from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-
 /* import icons */
+/* Server components */
 import { FaGolang } from "react-icons/fa6";
 import { SiTemporal,SiOllama,SiMinio,SiOpenai } from "react-icons/si";
 import { RiNextjsLine } from "react-icons/ri";
 import { DiRedis,DiPostgresql,DiDocker  } from "react-icons/di";
 
 
-
-// Register ScrollTrigger plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
 
 const defaultLogo:Logos3Props = {
   heading : "Technology Stack",
@@ -90,24 +85,25 @@ const defaultLogo:Logos3Props = {
 }
 
 const defaultFeatures: FeatureItem[] = [
-  {
+   {
     id: 1,
-    title: "🌍 Location",
-    image: "https://cdn.prod.website-files.com/609ed46055e27a02ffc0749b/668ed88b0d1cb50a971bf312_656fa9119f65a635082459d4_Screenshot%25202023-12-05%2520at%25204.43.20%2520PM.png",
-    description:
-      "ระบุตำแหน่งผู้ใช้งานอัตโนมัติ เพื่อนำเสนอข้อมูลหรือบริการที่เกี่ยวข้องกับพื้นที่ปัจจุบัน",
-  },
-  {
-    id: 2,
     title: "🌤️ Weather",
-    image: "https://i.pinimg.com/736x/d9/d2/3c/d9d23c99e0a1004655244d7a26dedf59.jpg",
+    image: "/assets/images/ig.png",
     description:
       "ตรวจสอบสภาพอากาศแบบเรียลไทม์ ด้วยข้อมูลจากแหล่งที่เชื่อถือ",
   },
   {
+    id: 2,
+    title: "🌍 Location",
+    image: "/assets/images/map.png",
+    description:
+      "ระบุตำแหน่งผู้ใช้งานอัตโนมัติ เพื่อนำเสนอข้อมูลหรือบริการที่เกี่ยวข้องกับพื้นที่ปัจจุบัน",
+  },
+ 
+  {
     id: 3,
     title: "🔎 Search and Summarize",
-    image: "https://www.zdnet.com/a/img/resize/e9abe4bcd586cc95b93c32fd2ea2ee3e0b92780c/2023/10/18/066f13f4-f158-4564-acca-641db3b6bf2b/sge-google.jpg?auto=webp&precrop=1218,636,x46,y29&width=1280",
+    image: "/assets/images/sge-google.png",
     description:
       "ค้นหาข้อมูลจากแหล่งออนไลน์และสรุปประเด็นสำคัญให้อ่านง่าย พร้อมอ้างอิงแหล่งที่มาชัดเจน ",
   },
@@ -129,7 +125,7 @@ const defaultBlog: Blog7Props  = {
             author: "Sarah Chen",
             published: "1 Jan 2024",
             url: "https://shadcnblocks.com",
-            image: "https://shadcnblocks.com/images/block/placeholder-dark-1.svg",
+            image: "https://images.unsplash.com/photo-1636056514473-dd532ed74cf2?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             id: "post-2",
@@ -140,7 +136,7 @@ const defaultBlog: Blog7Props  = {
             author: "Marcus Rodriguez",
             published: "1 Jan 2024",
             url: "https://shadcnblocks.com",
-            image: "https://shadcnblocks.com/images/block/placeholder-dark-1.svg",
+            image: "https://images.unsplash.com/photo-1724185773486-0b39642e607e?q=80&w=3133&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           },
           {
             id: "post-3",
@@ -151,17 +147,18 @@ const defaultBlog: Blog7Props  = {
             author: "Emma Thompson",
             published: "1 Jan 2024",
             url: "https://shadcnblocks.com",
-            image: "https://shadcnblocks.com/images/block/placeholder-dark-1.svg",
+            image: "https://images.pexels.com/photos/5185164/pexels-photo-5185164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
           },
         ]
 }
 
 
+export const Page = () => {
 
-
-
-
-const Page = () => {
+  // Register ScrollTrigger plugin
+  if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger)
+  }
   const heroRef = useRef<HTMLElement>(null)
   const modelRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)

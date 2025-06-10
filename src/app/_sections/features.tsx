@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
+
+
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -102,11 +104,12 @@ export const Feature197 = (props: Feature197Props) => {
                   </AccordionTrigger>
                   <AccordionContent>
                     <p className="mt-3 text-muted-foreground">{tab.description}</p>
-                    <div className="mt-4 md:hidden">
+                    <div className="mt-4 md:hidden relative">
                       <img
                         src={tab.image || "/placeholder.svg"}
                         alt={tab.title}
                         className="h-full max-h-80 w-full rounded-md object-cover"
+                       
                       />
                     </div>
                   </AccordionContent>
@@ -119,6 +122,7 @@ export const Feature197 = (props: Feature197Props) => {
               src={activeImage || "/placeholder.svg"}
               alt="Feature preview"
               className="aspect-4/3 rounded-md object-cover pl-4"
+              
             />
           </div>
         </div>

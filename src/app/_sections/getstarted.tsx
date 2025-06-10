@@ -1,6 +1,7 @@
+"use client";
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { ArrowRight } from "lucide-react"
+
 
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -146,15 +147,7 @@ export const Blog7 = (props: Blog7Props) => {
                 <p className="text-muted-foreground">{post.summary}</p>
               </CardContent>
               <CardFooter>
-                <a
-                  href={post.url}
-                  target="_blank"
-                  className="flex items-center text-foreground hover:underline"
-                  rel="noreferrer"
-                >
-                  Read more
-                  <ArrowRight className="ml-2 size-4" />
-                </a>
+                
               </CardFooter>
             </Card>
           ))}

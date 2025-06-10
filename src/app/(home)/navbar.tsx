@@ -26,7 +26,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { FcGoogle } from "react-icons/fc";
+
+import { FaFacebook ,FaGoogle,FaGithub } from "react-icons/fa";
 
 import {
   Dialog,
@@ -35,18 +36,65 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { redirect , RedirectType } from "next/navigation";
 
 import Image from "next/image";
+import Link from 'next/link'
+
+
+
+
+
+
+
 
 const ButtonTrigger = () => {
+
   return (
     <DialogTrigger asChild>
-      <Button className="lg:inline-flex">Sign up</Button>
+      <Button className="lg:inline-flex" >Sign In</Button>
     </DialogTrigger>
   );
 };
 
-export const Navbar5 = () => {
+
+const DialogGoogleTrigger = ({url}:{url : string}) => {
+
+  function SignUpGoogle() {
+    redirect(url,RedirectType.push);
+  }
+
+  return (
+                 <Dialog>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Sign In</DialogTitle>
+                    
+                      </DialogHeader>
+                       <div className="flex flex-col gap-4" onClick={SignUpGoogle} >
+                            <Button variant="secondary" className="w-full">
+                              <FaGoogle className="mr-2 size-5" />
+                              Sign In with Google
+                            </Button>
+                            <Button variant="secondary" className="w-full">
+                              <FaFacebook className="mr-2 size-5" />
+                              Sign In with Facebook
+                            </Button>
+                            <Button variant="secondary" className="w-full">
+                              <FaGithub className="mr-2 size-5" />
+                              Sign In with Github
+                            </Button>
+                        </div>
+                    </DialogContent>
+
+                    <ButtonTrigger />
+              </Dialog>
+  );
+}
+
+
+export const Navbar5 = ({signinGoogleUrl}:{signinGoogleUrl: string}) => {
+  
   const features = [
     {
       title: "Dashboard",
@@ -84,21 +132,21 @@ export const Navbar5 = () => {
     <section className="fixed top-0 z-50 w-full bg-background border-b py-4">
       <div className="container mx-auto">
         <nav className="flex items-center justify-between">
-          <a
-            href="https://www.shadcnblocks.com"
+          <Link
+            href="/"
             className="flex items-center gap-2"
           >
             <Image
-              src="https://shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg"
+              src="/assets/logo.svg"
               className="max-h-8"
               alt="Shadcn UI Navbar"
               width={32}
               height={32}
             />
             <span className="text-lg font-semibold tracking-tighter">
-              Shadcnblocks.com
+              Ratcha AI
             </span>
-          </a>
+          </Link>
           <NavigationMenu className="hidden lg:block">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -151,22 +199,7 @@ export const Navbar5 = () => {
             </NavigationMenuList>
           </NavigationMenu>
           <div className="hidden items-center gap-4 lg:flex">
-              <Dialog>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Sign In</DialogTitle>
-                    
-                      </DialogHeader>
-                       <div className="flex flex-col gap-4">
-                            <Button variant="outline" className="w-full">
-                              <FcGoogle className="mr-2 size-5" />
-                              Sign up with Google
-                            </Button>
-                          </div>
-                    </DialogContent>
-
-                    <ButtonTrigger />
-              </Dialog>
+              <DialogGoogleTrigger url={signinGoogleUrl} />
           </div>
           <Sheet>
             <SheetTrigger asChild className="lg:hidden">
@@ -234,22 +267,7 @@ export const Navbar5 = () => {
                   </a>
                 </div>
                 <div className="mt-6 flex flex-col gap-4">
-                  <Dialog>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Sign In</DialogTitle>
-                    
-                      </DialogHeader>
-                       <div className="flex flex-col gap-4">
-                            <Button variant="outline" className="w-full">
-                              <FcGoogle className="mr-2 size-5" />
-                              Sign up with Google
-                            </Button>
-                          </div>
-                    </DialogContent>
-
-                    <ButtonTrigger />
-                  </Dialog>
+                  <DialogGoogleTrigger url={signinGoogleUrl} />
                 </div>
               </div>
             </SheetContent>

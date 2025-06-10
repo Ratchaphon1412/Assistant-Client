@@ -1,13 +1,16 @@
 
 import React from "react";
 import type { Metadata } from "next";
+import Image from 'next/image'
 import { Geist, Geist_Mono } from "next/font/google";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 import { Navbar5 } from "./navbar";
 
 
-import "./globals.css";
+import "../globals.css";
+
+const GoogleSignInUrl = process.env.ENDPOINT_URL + "/api/v1/auth/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -117,7 +120,7 @@ const Footer7 = ({
             {/* Logo */}
             <div className="flex items-center gap-2">
               <a href={logo.url}>
-                <img src={logo.src || "/placeholder.svg"} alt={logo.alt} title={logo.title} className="h-8" />
+                <Image src={logo.src || "/placeholder.svg"} alt={logo.alt} title={logo.title}  width={32} height={32} />
               </a>
               <h2 className="text-xl font-semibold">{logo.title}</h2>
             </div>
@@ -179,7 +182,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <nav>
-          <Navbar5/>
+          <Navbar5 signinGoogleUrl={GoogleSignInUrl}/>
         </nav>
         {children}
         <footer>
