@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server"
 import { redirect } from 'next/navigation'
-import { GoogleCallBackCode } from "@/lib/api/external/auth"
+import { GoogleCallBackCode } from "@/utils/api/external/auth"
 import { cookies } from "next/headers";
 
 export async function GET(request:NextRequest) {

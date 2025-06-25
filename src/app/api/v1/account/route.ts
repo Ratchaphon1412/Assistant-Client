@@ -1,6 +1,6 @@
 
 import {  NextResponse } from "next/server"
-import  { GetAccount } from "@/lib/api/external/auth";
+import  { GetAccount } from "@/utils/api/external/auth";
 import { cookies } from "next/headers";
 
 

@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
-import { GetAccount } from "@/lib/api/internal/auth";
+import { GetAccount } from "@/utils/api/internal/auth";
 
 
 export async function ChatNavbar() {
