@@ -1,3 +1,4 @@
+
 import React from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -21,11 +22,16 @@ export const metadata: Metadata = {
 
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
+ 
+
   return (
      <html lang="en">
           
@@ -34,7 +40,7 @@ export default function RootLayout({
           >
             <div className="bg-gradient-to-br from-background via-blue-800 to-accent h-screen ">
 
-              <ChatNavbar />
+              <ChatNavbar  />
               <div className="">
 
               {children}
