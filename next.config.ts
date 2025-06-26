@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'openweathermap.org',
+        port: '',
+        pathname: '/img/wn/**',
+      }
       // เพิ่ม domain อื่นๆ ที่ต้องการ
     ],
   },

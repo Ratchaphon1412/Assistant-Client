@@ -1,17 +1,13 @@
-import { Cloud, Sun, CloudRain } from "lucide-react"
+"use client"
 import { Card, CardContent } from "@/components/ui/card"
 import { VoiceVisual } from "./_sections/voice-visualizer"
 import  { ModelHero3D } from "./_sections/model"
 import { WeatherSection } from "./_sections/weather"
 
-const weatherForecast = [
-  { day: "Sun", icon: Sun, temp: "32.3", condition: "sunny" },
-  { day: "Mon", icon: Cloud, temp: "30.1", condition: "cloudy" },
-  { day: "Tue", icon: Cloud, temp: "29.3", condition: "cloudy" },
-  { day: "Wed", icon: Cloud, temp: "27.3", condition: "cloudy" },
-  { day: "Thu", icon: Cloud, temp: "26.5", condition: "cloudy" },
-  { day: "Fri", icon: CloudRain, temp: "27.5", condition: "rainy" },
-]
+import { useEffect, useState } from "react"
+
+import { getCurrentWeatherData,getForecastWeatherData,type ForecastWeatherResponse } from "@/utils/api/internal/weather"
+
 
 const newsItems = [
   {
@@ -71,9 +67,91 @@ const newsItems = [
   },
 ]
 
+  
 
 
 export default function Dashboard() {
+  const [location, setLocation] = useState({
+    lat: "13.74998", // Default latitude for Bangkok
+    long: "100.51682", // Default longitude for Bangkok 
+  });
+  const [currentWeather, setCurrentWeather] = useState({
+    temp: 0,
+    weather_name: "Loading...",
+    weather_description: "Loading...",
+    icon: "01d", // Default icon
+    location_name: "Loading...",
+  });
+
+  const [weatherForecast, setWeatherForecast] = useState<ForecastWeatherResponse[]>([]);
+
+  useEffect(() => {
+
+    if (typeof window !== "undefined") {
+      // Get user's location if available
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          setLocation({
+            lat: position.coords.latitude.toString(),
+            long: position.coords.longitude.toString(),
+          });
+
+          const [weatherData, weatherError] = await getCurrentWeatherData(location.lat, location.long);
+          if (weatherError) {
+            console.error("Error fetching weather data:", weatherError.message);
+            setCurrentWeather({
+              temp: 0,
+              weather_name: "Error",
+              weather_description: "Unable to fetch weather data",
+              icon: "01d", // Default icon if there's an error
+              location_name: "Unknown Location"
+            });
+          } else {
+            setCurrentWeather({
+              temp: weatherData?.temp || 0,
+              weather_name: weatherData?.weather_name || "Unknown",
+              weather_description: weatherData?.weather_description || "No description available",
+              icon: weatherData?.icon || "01d", // Default icon if not available
+              location_name: weatherData?.location_name || "Unknown Location"
+            });
+          }
+
+          const [forecastData, forecastError] = await getForecastWeatherData(location.lat, location.long);
+          if (forecastError) {
+            console.error("Error fetching forecast data:", forecastError.message);
+            setWeatherForecast([]);
+          } else {
+            setWeatherForecast(forecastData ?? []);
+          }
+          
+          
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          // Fallback to default location if geolocation fails
+          setLocation({
+            lat: "13.74998", // Default latitude for Bangkok
+            long: "100.51682", // Default longitude for Bangkok
+          });
+        }
+      );
+    } else {
+      // Fallback to default location if not in browser environment
+      setLocation({
+        lat: "13.74998", // Default latitude for Bangkok
+        long: "100.51682", // Default longitude for Bangkok
+      });
+    }
+
+
+
+    
+
+
+
+  }, []);
+  
+ 
 
   return (
     <div className="">
@@ -114,8 +192,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="col-span-3 space-y-4 pt-6 max-h-[80dvh] ">
-          <WeatherSection weatherForecast={weatherForecast} />
+        <div className="col-span-3 space-y-4 pt-6 max-h-[80dvh] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+          <WeatherSection currentWeather={currentWeather} weatherForecast={weatherForecast} />
         </div>
 
 

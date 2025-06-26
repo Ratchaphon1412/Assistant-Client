@@ -2,7 +2,8 @@
 import axiosInstance from "@/lib/request";
 import axios from 'axios';
 import "server-only"; // Ensure this file is treated as a server-only module
-import { type AccountResponse,ResponseError } from "@/lib/api/external/auth";
+import { type AccountResponse } from "@/utils/api/external/auth";
+import { ResponseError } from "@/utils/api/type";
 import { cookies } from "next/headers";
 
 

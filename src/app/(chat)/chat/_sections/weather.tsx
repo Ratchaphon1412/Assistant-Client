@@ -1,19 +1,40 @@
+"use client"
 import { Card, CardContent } from "@/components/ui/card"
-import { ForwardRefExoticComponent , RefAttributes } from "react"
-import { Cloud, Sun,LucideProps } from "lucide-react"
+import Image from 'next/image'
+
+
 
 type Props = {
-    weatherForecast: WeatherForecast[]
+    currentWeather: CurrentWeather
+    weatherForecast: ForecastWeather[]
+
+}
+type ForecastWeather = {
+    weather_name:string
+    temp: number
+    weather_description: string
+    icon: string
+    date_txt: string
 }
 
-type WeatherForecast ={
-    day: string
-    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref">> & RefAttributes<SVGSVGElement>
-    temp: string
-    condition: string
+type CurrentWeather = {
+    weather_name:string
+    temp: number
+    weather_description: string
+    icon: string
+    location_name: string
 }
+
+
 
 export const WeatherSection = (props:Props) => {
+    const now = new Date();
+    const weekday = now.toLocaleDateString('th-TH', { weekday: 'long' });
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    const time = `${hour}:${minute}`;
+
+
     return (
         <>
         {/* Right Column - Weather */}
@@ -23,13 +44,18 @@ export const WeatherSection = (props:Props) => {
             <CardContent className="p-4">
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <p className="text-sm text-white/60">Sat, 14:40</p>
-                  <p className="text-4xl font-bold">28°</p>
-                  <p className="text-sm text-white/80">Partly Sunny</p>
+                  <p className="text-sm text-white/60">{weekday} , {time}</p>
+                  <p className="text-4xl font-bold">{props.currentWeather.temp} °C</p>
+                  <p className="text-sm text-white/80">{props.currentWeather.weather_name}</p>
+                  <p className="text-xs text-white/60">{props.currentWeather.weather_description}</p>
+                  <p className="text-xs text-white/60">{props.currentWeather.location_name}</p>
                 </div>
                 <div className="relative">
-                  <Sun className="w-12 h-12 text-yellow-400" />
-                  <Cloud className="w-8 h-8 text-white/60 absolute -bottom-1 -right-1" />
+                    <Image
+                        src={`https://openweathermap.org/img/wn/` + props.currentWeather.icon + `@2x.png`}
+                        width={72}
+                        height={72} alt={props.currentWeather.weather_name}
+                    />
                 </div>
               </div>
             </CardContent>
@@ -38,15 +64,24 @@ export const WeatherSection = (props:Props) => {
           {/* Weather Forecast */}
           <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white ">
             <CardContent className="p-4">
-              <h3 className="font-semibold mb-4">Weather Forecast Bangkok, TH</h3>
+              <h3 className="font-semibold mb-4">Weather Forecast {props.currentWeather.location_name}</h3>
               <div className="space-y-3">
                 {props.weatherForecast.map((day, index) => {
-                  const IconComponent = day.icon
                   return (
                     <div key={index} className="flex items-center justify-between">
-                      <span className="text-sm w-8">{day.day}</span>
-                      <IconComponent className="w-5 h-5 text-white/70" />
-                      <span className="text-sm font-medium">{day.temp}</span>
+                      <span className="text-sm w-8">{new Date(day.date_txt).toLocaleString('th-TH', {
+                            weekday: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}</span>
+                      
+                        <Image
+                            src={`https://openweathermap.org/img/wn/` + day.icon + `@2x.png`}
+                            width={72}
+                            height={72} alt={props.currentWeather.weather_name}
+                        />
+                      <span className="text-sm font-medium">{day.temp} °C</span>
+                    <span className="text-xs text-white/60">{day.weather_description}</span>
                     </div>
                   )
                 })}

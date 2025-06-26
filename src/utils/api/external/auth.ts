@@ -1,4 +1,5 @@
 import axiosInstance from "@/lib/request";
+import { ResponseError } from "@/utils/api/type";
 import axios from 'axios';
 
 
@@ -23,10 +24,7 @@ export type AccountResponse = {
     message: AccountBody
 }
 
-export type ResponseError = {
-    message: string;
-    code: number;
-}
+
 
 export async function GoogleCallBackCode(code: string): Promise<[GoogleCallBackCodeResponse | undefined, ResponseError | undefined]> {
     
