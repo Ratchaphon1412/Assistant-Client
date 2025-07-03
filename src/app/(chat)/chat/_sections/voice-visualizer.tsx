@@ -1,10 +1,28 @@
 "use client"
 
 import { Mic, MicOff, AlertCircle, Wifi,  } from "lucide-react"
-import { useState,useEffect, type Dispatch ,type SetStateAction} from "react"
+import { useState,useEffect, type Dispatch ,type SetStateAction , useRef} from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { ws } from "@/lib/websocket"
+
+
+type Thumbnail = {
+  width: number;
+  height: number;
+  src: string;
+};
+
+type SearchResult = {
+  kind: string;
+  title: string;
+  display_link: string;
+  link: string;
+  image: string;
+  chat_id: number;
+  thumbnails: Thumbnail[];
+};
 
 
 const  handleOnRecord = (recognition:SpeechRecognition,
@@ -20,6 +38,9 @@ const  handleOnRecord = (recognition:SpeechRecognition,
   recognition.onresult = async function (event) {
     const transcript = event.results[0][0].transcript;
     setSpeechToText(transcript);
+    ws.send(JSON.stringify({
+      input: transcript,
+    }));
 
     console.log("event", event);
     console.log("Transcript:", transcript);
@@ -33,6 +54,7 @@ const  handleOnRecord = (recognition:SpeechRecognition,
   recognition.onend = function () {
     setIsListening(false);
     console.log("Speech recognition ended");
+
   }
 
   recognition.onstart = function () {
@@ -58,11 +80,15 @@ export function handleOnStop(recognition:SpeechRecognition,setIsListening:Dispat
 
 
 
-export function VoiceVisual() {
+export function VoiceVisual({setSearchResult}: {setSearchResult:Dispatch<SetStateAction<SearchResult[]>> }) {
   const [error, setError] = useState<string>("")
   const [isListening, setIsListening] = useState<boolean>(false);
   const [speechToText, setSpeechToText] = useState<string>("");
+  const [audioUrl, setAudioUrl] = useState<string | undefined>( undefined);
+  const audioRef = useRef<HTMLAudioElement>(null);
   let recognition: SpeechRecognition;
+
+  
 
   useEffect(()=> {
     if (typeof window != "undefined") {
@@ -71,6 +97,43 @@ export function VoiceVisual() {
     }else {
       setError("ไม่รองรับการใช้งานบนเบราว์เซอร์นี้");
     }
+
+    
+    ws.onopen = () => {
+      console.log("WebSocket connection established");
+    }
+    
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("WebSocket message received:", data);
+      if (data) {
+        setSpeechToText(data.answer);
+        setAudioUrl(process.env.NEXT_PUBLIC_MEDIA_URL  + data.media || undefined);
+        
+        if (audioRef.current ) {
+          audioRef.current.src = process.env.NEXT_PUBLIC_MEDIA_URL + data.media || undefined;
+          audioRef.current.play().catch((error) => {
+            console.error("Error playing audio:", error);
+            setError("ไม่สามารถเล่นเสียงได้");
+          });
+        }
+        setSearchResult(data.search)
+
+      }
+      if (data.error) {
+        setError(data.error);
+      }
+
+
+    }
+
+    ws.onerror = (event) => {
+      console.error("WebSocket error:", event);
+      setError("เกิดข้อผิดพลาดในการเชื่อมต่อ WebSocket");
+    };
+   
+
+
   })
 
   
@@ -83,6 +146,9 @@ export function VoiceVisual() {
       <p className=" text-center  text-white/80 text-sm leading-relaxed ">
         {speechToText}
       </p>
+      <audio ref={audioRef} className="hidden" controls autoPlay={true}>
+        <source src={audioUrl} type="audio/mpeg" />
+      </audio>
 
     </div>
     <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white  ">

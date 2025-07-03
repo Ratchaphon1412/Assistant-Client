@@ -10,7 +10,7 @@ import { Navbar5 } from "./navbar";
 
 import "../globals.css";
 
-const GoogleSignInUrl = "/api/v1/auth/google";
+const GoogleSignInUrl = process.env.NEXT_PUBLIC_ENDPOINT_URL+ "/api/v1/auth/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -1,27 +1,33 @@
 
 import axiosInstance from "@/lib/request";
 import axios from 'axios';
-import "server-only"; // Ensure this file is treated as a server-only module
-import { type AccountResponse } from "@/utils/api/external/auth";
 import { ResponseError } from "@/utils/api/type";
-import { cookies } from "next/headers";
+
+
+export type AccountBody ={
+    email: string
+    profile: string
+}
 
 
 
 
 
-export async function GetAccount(): Promise<[AccountResponse | undefined, ResponseError | undefined]> {
 
-    const cookieStore = await cookies();
+export async function GetAccount(): Promise<[AccountBody | undefined, ResponseError | undefined]> {
+    const headerNext = await import ("next/headers");
+
+    const cookieStore = await headerNext.cookies();
     const jwt = cookieStore.get('accessToken')?.value || "";
     try{  
-       const response = await axiosInstance.get<AccountResponse>(process.env.NEXT_PUBLIC_CLIENT_URL+ "/api/v1/account",
+       const response = await axiosInstance.get<AccountBody>("/api/v1/account",
         {
-            headers: {
-                Cookie: `accessToken=${jwt}`,
-            }
+              headers: {
+                "Cookie": `accessToken=${jwt}`,
+              }
         }
        )
+       console.log("Cookie:", jwt);
         return [{
            ...response.data,
         }, undefined];
@@ -37,11 +43,21 @@ export async function GetAccount(): Promise<[AccountResponse | undefined, Respon
 }
 
 export async function Logout(): Promise<boolean> {
-    const cookieStore = await cookies();
-    const jwt = cookieStore.get('accessToken')?.value || "";
-    if (!jwt) {
+
+    try {
+       
+        const response =await axiosInstance.get("/api/v1/account/logout");
+        console.log("Logout response:", response.data);
+        if (response.status !== 200) {
+            return false;
+        }
+        return true;
+    } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+            console.error("Logout error:", err.response?.data);
+        } else {
+            console.error("An unexpected error occurred during logout");
+        }
         return false;
     }
-    cookieStore.delete('accessToken');
-    return true;
 }

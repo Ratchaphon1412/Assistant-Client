@@ -21,7 +21,7 @@ export type ForecastWeatherResponse = {
 export async function getCurrentWeatherData(lat:string,long:string): Promise<[ CurrentWeatherResponse | undefined ,ResponseError | undefined]> {
     try {
 
-        const response = await axiosInstance.get<CurrentWeatherResponse>(process.env.NEXT_PUBLIC_CLIENT_URL+'/api/v1/weather?lat='+lat + '&lon=' + long);
+        const response = await axiosInstance.get<CurrentWeatherResponse>('/api/v1/weather?lat='+lat + '&lon=' + long);
         
         return [response.data, undefined];
     }
@@ -37,7 +37,7 @@ export async function getCurrentWeatherData(lat:string,long:string): Promise<[ C
 export async function getForecastWeatherData(lat:string,long:string): Promise<[ ForecastWeatherResponse[] | undefined ,ResponseError | undefined]> {
     try {
 
-        const response = await axiosInstance.get<ForecastWeatherResponse[]>(process.env.NEXT_PUBLIC_CLIENT_URL+'/api/v1/weather/forecast?lat='+lat + '&lon=' + long);
+        const response = await axiosInstance.get<ForecastWeatherResponse[]>( '/api/v1/weather/forecast?lat='+lat + '&lon=' + long);
         
         return [response.data, undefined];
     }
