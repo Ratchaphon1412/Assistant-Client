@@ -153,7 +153,7 @@ const defaultBlog: Blog7Props  = {
 }
 
 
-export const Page = () => {
+const Home = () => {
 
   // Register ScrollTrigger plugin
   if (typeof window !== "undefined") {
@@ -487,10 +487,10 @@ export const Page = () => {
   )
 }
 
-export default function Home() {
+export default function Page() {
   return (
     <div>
-      <Page />
+      <Home />
     </div>
   )
 }
