@@ -112,10 +112,10 @@ export function VoiceVisual({setSearchResult}: {setSearchResult:Dispatch<SetStat
         
         if (audioRef.current ) {
           audioRef.current.src = process.env.NEXT_PUBLIC_MEDIA_URL + data.media || undefined;
-          audioRef.current.play().catch((error) => {
-            console.error("Error playing audio:", error);
-            setError("ไม่สามารถเล่นเสียงได้");
-          });
+          // audioRef.current.play().catch((error) => {
+          //   console.error("Error playing audio:", error);
+          //   setError("ไม่สามารถเล่นเสียงได้");
+          // });
         }
         setSearchResult(data.search)
 
