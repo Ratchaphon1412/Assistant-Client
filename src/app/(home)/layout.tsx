@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Ratcha AI",
     images: [
       {
-        url: "/assets/images/link-img.png",
+        url: "https://ratcha-ai.ratchaphon1412.dev/assets/images/link-img.png",
         width: 800,
         height: 600,
         alt: "Ratcha AI Logo",
