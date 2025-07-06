@@ -32,11 +32,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ratcha AI | Assistant for your personal needs",
     description: "Ratcha AI is an AI assistant designed to help you with your personal needs, from answering questions to providing recommendations.",
-    url: "/assets/images/link-img.png",
+    url: "https://ratcha-ai.ratchaphon1412.dev/",
     siteName: "Ratcha AI",
     images: [
       {
-        url: "/assets/logo.svg",
+        url: "/assets/images/link-img.png",
         width: 800,
         height: 600,
         alt: "Ratcha AI Logo",
