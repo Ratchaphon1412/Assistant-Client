@@ -11,11 +11,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import {
@@ -150,50 +148,35 @@ export const Navbar5 = ({signinGoogleUrl}:{signinGoogleUrl: string}) => {
           <NavigationMenu className="hidden lg:block">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="grid w-[600px] grid-cols-2 p-3">
-                    {features.map((feature, index) => (
-                      <NavigationMenuLink
-                        href={feature.href}
-                        key={index}
-                        className="rounded-md p-3 transition-colors hover:bg-muted/70"
-                      >
-                        <div key={feature.title}>
-                          <Label className="mb-1 font-semibold text-foreground">
-                            {feature.title}
-                          </Label>
-                          <Label className="text-sm text-muted-foreground">
-                            {feature.description}
-                          </Label>
-                        </div>
-                      </NavigationMenuLink>
-                    ))}
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="#"
+                  href="#features"
                   className={navigationMenuTriggerStyle()}
                 >
-                  Products
+                  Features
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="#"
+                  href="#techstack"
                   className={navigationMenuTriggerStyle()}
                 >
-                  Resources
+                  Tech Stack
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="#"
+                  href="#how-it-works"
                   className={navigationMenuTriggerStyle()}
                 >
-                  Contact
+                  How it works
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#browser-support"
+                  className={navigationMenuTriggerStyle()}
+                >
+                  Browser Support
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>

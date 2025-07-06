@@ -96,7 +96,7 @@ export const Logos3 = (props: Logos3Props) => {
   return (
     <>
       {/* Smooth transition gradient from hero to logos section */}
-      <div ref={transitionRef} className="w-full bg-gradient-to-b from-black/90 to-accent"></div>
+      <div id="#teachstack" ref={transitionRef} className="w-full bg-gradient-to-b from-black/90 to-accent"></div>
 
       <section ref={logoRef} className="bg-accent pt-10 pb-20">
         <div className="container flex flex-col items-center text-center">

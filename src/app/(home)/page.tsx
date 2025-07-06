@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button"
 /* Client components */
 /* import section components */
-import { ModelHero3D } from "../_sections/hero"
-import { Logos3, type Logos3Props } from "../_sections/techstack"
-import { Feature197 , type FeatureItem} from "../_sections/features"
-import { Blog7, type Blog7Props } from "../_sections/getstarted"
+import { ModelHero3D } from "./_sections/hero"
+import { Logos3, type Logos3Props } from "./_sections/techstack"
+import { Feature197 , type FeatureItem} from "./_sections/features"
+import { Blog7, type Blog7Props } from "./_sections/getstarted"
 
 
 /* import react and external library */
