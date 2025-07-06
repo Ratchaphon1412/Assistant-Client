@@ -4,7 +4,7 @@ import { GetAccount } from '@/utils/api/internal/auth'
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-    // check is logged in
+    // // check is logged in
     const token = request.cookies.get('accessToken')?.value
     if (!token) {
         return NextResponse.redirect(process.env.NEXT_PUBLIC_CLIENT_URL || "/")
