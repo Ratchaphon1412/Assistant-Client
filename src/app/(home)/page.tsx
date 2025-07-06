@@ -1,6 +1,6 @@
 "use client";
 /* import necessary components */
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 /* Client components */
 /* import section components */
 import { ModelHero3D } from "./_sections/hero"
@@ -457,19 +457,19 @@ const Home = () => {
           <div className="max-w-[46.25rem] flex flex-col items-center justify-center gap-6 px-5 text-center">
             <h1
               ref={titleRef}
-              className="font-serif text-4xl leading-tight text-white md:text-6xl xl:text-[4.4rem] drop-shadow-lg"
+              className="font-serif text-2xl leading-tight text-white md:text-4xl xl:text-[2.2rem] drop-shadow-lg"
             >
-              Explore the wonders of science.
+               Ratcha AI ผู้ช่วยอัจฉริยะที่พร้อมตอบสนองคุณด้วยข้อความและเสียงในทันที
             </h1>
             <p ref={descriptionRef} className="text-base text-white/90 drop-shadow-md">
-              From stunning skyscrapers to intricate bridges and innovative architectural marvels, each photo invites
-              you to explore the artificial wonders of the world.
+              สัมผัสประสบการณ์ใหม่ของการโต้ตอบด้วย AI Assistant ที่เข้าใจคุณได้อย่างลึกซึ้ง
+              พร้อมให้คำตอบและความช่วยเหลือในทุกเรื่องที่คุณต้องการ
             </p>
-            <div ref={buttonRef}>
+            {/* <div ref={buttonRef}>
               <Button className="h-fit w-fit rounded-full px-7 py-4 text-sm leading-tight font-medium bg-white text-black hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                See all photos
+                Chat
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

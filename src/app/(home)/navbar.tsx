@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/sheet";
 
 
-import { FaFacebook ,FaGoogle,FaGithub } from "react-icons/fa";
+import { FaGoogle} from "react-icons/fa";
 
 import {
   Dialog,
@@ -74,14 +74,14 @@ const DialogGoogleTrigger = ({url}:{url : string}) => {
                               <FaGoogle className="mr-2 size-5" />
                               Sign In with Google
                             </Button>
-                            <Button variant="secondary" className="w-full">
+                            {/* <Button variant="secondary" className="w-full">
                               <FaFacebook className="mr-2 size-5" />
                               Sign In with Facebook
                             </Button>
                             <Button variant="secondary" className="w-full">
                               <FaGithub className="mr-2 size-5" />
                               Sign In with Github
-                            </Button>
+                            </Button> */}
                         </div>
                     </DialogContent>
 
