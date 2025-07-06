@@ -147,7 +147,6 @@ export function VoiceVisual({setSearchResult}: {setSearchResult:Dispatch<SetStat
       <p className=" text-center  text-white/80 text-sm leading-relaxed ">
         {speechToText}
       </p>
-      {audioUrl}
       <audio ref={audioRef} className="hidden" controls autoPlay={true}>
         <source src={audioUrl} type="audio/mpeg" />
       </audio>
