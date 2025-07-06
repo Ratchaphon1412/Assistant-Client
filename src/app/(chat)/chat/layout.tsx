@@ -21,7 +21,23 @@ export const metadata: Metadata = {
   icons: {  
     icon: "/assets/logo.svg",
     apple: "/assets/logo.svg",
-  }
+  },
+    openGraph: {
+    title: "Chat | Ratcha AI",
+    description: "Ratcha AI is an AI assistant designed to help you with your personal needs, from answering questions to providing recommendations.",
+    url: "/assets/images/link-img.png",
+    siteName: "Ratcha AI",
+    images: [
+      {
+        url: "/assets/logo.svg",
+        width: 800,
+        height: 600,
+        alt: "Ratcha AI Logo",
+      },
+    ],
+    locale: "th_TH",
+    type: "website",
+  },
 };
 
 
