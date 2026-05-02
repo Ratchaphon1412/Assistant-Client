@@ -2,7 +2,6 @@ FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -22,9 +21,21 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# ⬇️ ส่วนที่เพิ่มเข้ามา: รับค่าจากคำสั่ง docker build และส่งให้ Next.js ⬇️
+# ต้องประกาศ ARG ตรงนี้ (ใน stage builder) ไม่งั้นค่าจะส่งมาไม่ถึงตอน build
+ARG NEXT_PUBLIC_ENDPOINT_URL
+ARG NEXT_PUBLIC_ENDPOINT_URL_WS
+ARG NEXT_PUBLIC_MEDIA_URL
+ARG NEXT_PUBLIC_CLIENT_URL
+
+# ส่งต่อเป็น ENV เพื่อให้ process build มองเห็น
+ENV NEXT_PUBLIC_ENDPOINT_URL=${NEXT_PUBLIC_ENDPOINT_URL}
+ENV NEXT_PUBLIC_ENDPOINT_URL_WS=${NEXT_PUBLIC_ENDPOINT_URL_WS}
+ENV NEXT_PUBLIC_MEDIA_URL=${NEXT_PUBLIC_MEDIA_URL}
+ENV NEXT_PUBLIC_CLIENT_URL=${NEXT_PUBLIC_CLIENT_URL}
+# ⬆️ จบส่วนที่เพิ่ม ⬆️
+
 # Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN \
@@ -39,7 +50,6 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-# Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
@@ -52,7 +62,6 @@ RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
@@ -62,6 +71,4 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
 CMD ["node", "server.js"]

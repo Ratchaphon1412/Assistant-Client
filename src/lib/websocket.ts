@@ -111,4 +111,4 @@ class WebSocketManager {
 }
 
 // สร้าง instance เดียวสำหรับทั้งแอป
-export const wsManager = new WebSocketManager(process.env.NEXT_PUBLIC_ENDPOINT_URL_WS +'/ws/v1/chat' || "ws://localhost:8080" +'/ws/v1/chat')
+export const wsManager = new WebSocketManager(process.env.NEXT_PUBLIC_ENDPOINT_URL_WS +'/ws/v1/chat')
